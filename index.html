@@ -219,12 +219,15 @@
                     return "a textbook from Amazon";
                 }
 
-                if(amt > 5) {
+                if(amt > 9) {
                     return "Two magazines";
                 }
 
-                return "A pint of Peroni";
+                if(amt > 4) {
+                    return "A pint of Peroni";
+                }
 
+                return "A few chocolate bars";
             }
         };
 
