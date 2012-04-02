@@ -98,7 +98,7 @@
 
                 <p><em class="fuzzyCost"></em></p>
 
-                <p>It took <span class="mins">0</span> company minutes</p>
+                <p>It took <span class="companyMins">0</span> company minutes</p>
 
                 <p><a class="btn btn-primary btn-large" id="btnGoTab6" title="Record this meeting length to a URL">Submit time&raquo;</a></p>
             </div>
@@ -170,7 +170,7 @@
                 var costElapsed = Math.round(hrsElapsed * this.people * this.hourlyRate, 10);
                 
                 $('.cost').text(costElapsed);
-                $('.mins').text(Math.round(this.secsElapsed / 6, 10) / 10);
+                $('.companyMins').text(this.people * Math.round(this.secsElapsed / 6, 10) / 10);
                 $('.fuzzyCost').text("... or " + this.fuzzifyAmount(costElapsed));
 
                 if(this.running) {
