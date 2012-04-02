@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Time Is Money</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="App for working out how much your meetings are costing you">
+    <meta name="author" content="Gavin Davies, Box UK">
+
+    <!-- Le styles -->
+    
+-    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <!--
+    <link rel="shortcut icon" href="ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../ico/apple-touch-icon-57-precomposed.png">
+    -->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="index.html">Time Is Money</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="index.html">App</a></li>
+              <li><a id="btnContact" href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+        <ul id="tab" class="nav nav-tabs" style="display:none">
+            <li class="active"><a id="tabBtnHome" href="#home" data-toggle="tab">Home</a></li>
+            <li class=""><a id="tabBtnSettings" href="#settings" data-toggle="tab">Settings</a></li>
+            <li class=""><a id="tabBtnApp" href="#app" data-toggle="tab">App</a></li>
+            <li class=""><a id="tabBtnSummary" href="#summary" data-toggle="tab">Summary</a></li>
+            <li class=""><a id="tabBtnSubmitting" href="#submitting" data-toggle="tab">Submitting</a></li>
+            <li class=""><a id="tabBtnDone" href="#done" data-toggle="tab">Done</a></li>
+            <li class=""><a id="tabBtnContact" href="#contact" data-toggle="tab">Contact</a></li>
+        </ul>
+        <div class="hero-unit">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="home">
+              
+                <h1>Time Is Money</h1>
+                <p>This is a tool for calculating how much your meetings are costing you</p>
+                <p>This app is just to give an idea of meeting costs. It isn't "real money" as such but should give you
+                   an idea of what inefficient meetings could be costing you.</p>
+                <p>By using this app, you agree that you won't use this to do anything naughty!</p>
+                <p><a class="btn btn-primary btn-large" id="btnGoTabSettings">Let's go! &raquo;</a></p>
+              
+            </div>
+            <div class="tab-pane fade" id="settings">
+                <h1>Settings</h1>
+
+                <h2>Rate</h2>
+                <div data-role="fieldcontain">
+                    <label for="hourlyRate">What is your hourly rate per person?</label><br/>
+                    <input type="number" name="hourlyRate" id="hourlyRate" min="20" max="200" value="115"/>
+                </div>
+
+                <h2>People</h2>
+                <div data-role="fieldcontain">
+                    <label for="people">How many staff are attending?</label><br/>
+                    <input type="number" name="people" id="people" min="2" max="50"  value="2"/>
+                </div>
+
+                <p><a class="btn btn-primary btn-large" id="btnGoTab4">Start the meeting! &raquo;</a></p>
+            </div>
+            <div class="tab-pane fade" id="app">
+                <h1>This meeting has cost:</h1>
+                <p>£<span class="cost">0</span</p>
+
+                <p><em>(or 10 iPads!)</em></p>
+
+
+                <p><a class="btn btn-primary btn-large" id="btnGoTab5">Stop timer &raquo;</a></p>
+            </div>
+            <div class="tab-pane fade" id="summary">
+                <h1>This meeting cost:</h1>
+                <p>£<span class="cost">0</span</p>
+
+                <p><em>(or 10 iPads!)</em></p>
+
+                <p>It took <span class="mins">0</span> company minutes</p>
+
+                <p><a class="btn btn-primary btn-large" id="btnGoTab6" title="Record this meeting length to a URL">Submit time&raquo;</a></p>
+            </div>
+            <div class="tab-pane fade" id="submitting">
+                <h1>Submitting...</h1>
+                <p>Submitting your figures...</p>
+            </div>
+            <div class="tab-pane fade" id="done">
+                <h1>Done...</h1>
+                <p>Done! Resetting for next user...</p>
+            </div>
+
+            <div class="tab-pane fade" id="contact">
+                <h1>Contact...</h1>
+                <p><a href="http://www.boxuk.com">Box UK</a></p>
+
+                <p><a class="btn btn-primary btn-large" id="btnGoToTheApp">Go to the app &raquo;</a></p>
+
+            </div>
+          </div>
+        </div>
+
+      <footer>
+        <p>&copy; Gavin Davies 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="jquery/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script type="text/javascript">
+    $(function() {
+
+        window.TimeIsMoney = {
+
+            costPerPersonPerHour: 115,
+
+            people: 50,
+
+            secsElapsed: 0,
+
+            running: false,
+
+            start: function() {
+                this.costPerPersonPerHour = parseInt($('#hourlyRate').val(), 10);
+                this.people = parseInt($('#people').val(), 10);
+debugger;
+                this.secsElapsed = 0;
+
+                this.running = true;
+
+                var _self = this;
+                setTimeout(function() {
+                    _self.update();
+                }, 1000);
+            },
+
+            stop: function() {
+                this.running = false;
+            },
+
+            update: function() {
+                this.secsElapsed++;
+                var hrsElapsed = this.secsElapsed / 60 / 60;
+                var costElapsed = Math.round(hrsElapsed * this.people * this.costPerPersonPerHour, 10);
+                
+                $('.cost').text(costElapsed);
+                $('.mins').text(Math.round(this.secsElapsed / 60, 10));
+
+                if(this.running) {
+                    var _self = this;
+                    setTimeout(function() {
+                        _self.update();
+                    }, 1000);
+                }
+            }
+        };
+
+
+        $('#btnGoTabSettings, #btnGoToTheApp').click(function() {
+            $('#tabBtnSettings').click();
+        });
+        $('#btnGoTab4').click(function() {
+            $('#tabBtnApp').click();
+            TimeIsMoney.start();
+        });
+        $('#btnGoTab5').click(function() {
+            TimeIsMoney.stop();
+            $('#tabBtnSummary').click();
+        });
+        $('#btnGoTab5').click(function() {
+            TimeIsMoney.stop();
+            $('#tabBtnSummary').click();
+        });
+
+        $('#btnContact').click(function() {
+            $('#tabBtnContact').click();
+        });
+
+    });
+    </script>
+  </body>
+</html>
