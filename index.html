@@ -36,7 +36,7 @@
           <a class="brand" href="index.html">Time Is Money</a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active"><a href="index.html">App</a></li>
+              <li class="active"><a id="btnApp" href="#app">App</a></li>
               <li><a id="btnContact" href="#contact">Contact</a></li>
             </ul>
           </div><!--/.nav-collapse -->
@@ -88,8 +88,7 @@
                 <h1>This meeting has cost:</h1>
                 <p>£<span class="cost">0</span</p>
 
-                <p><em>(or 10 iPads!)</em></p>
-
+                <p><em class="fuzzyCost"></em></p>
 
                 <p><a class="btn btn-primary btn-large" id="btnGoTab5">Stop timer &raquo;</a></p>
             </div>
@@ -97,7 +96,7 @@
                 <h1>This meeting cost:</h1>
                 <p>£<span class="cost">0</span</p>
 
-                <p><em>(or 10 iPads!)</em></p>
+                <p><em class="fuzzyCost"></em></p>
 
                 <p>It took <span class="mins">0</span> company minutes</p>
 
@@ -135,10 +134,10 @@
     <script src="bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript">
     $(function() {
-
         window.TimeIsMoney = {
 
-            costPerPersonPerHour: 115,
+            // cost per person per hour
+            hourlyRate: 115,
 
             people: 50,
 
@@ -147,9 +146,10 @@
             running: false,
 
             start: function() {
-                this.costPerPersonPerHour = parseInt($('#hourlyRate').val(), 10);
+
+                this.hourlyRate = parseInt($('#hourlyRate').val(), 10);
                 this.people = parseInt($('#people').val(), 10);
-debugger;
+
                 this.secsElapsed = 0;
 
                 this.running = true;
@@ -167,10 +167,11 @@ debugger;
             update: function() {
                 this.secsElapsed++;
                 var hrsElapsed = this.secsElapsed / 60 / 60;
-                var costElapsed = Math.round(hrsElapsed * this.people * this.costPerPersonPerHour, 10);
+                var costElapsed = Math.round(hrsElapsed * this.people * this.hourlyRate, 10);
                 
                 $('.cost').text(costElapsed);
-                $('.mins').text(Math.round(this.secsElapsed / 60, 10));
+                $('.mins').text(Math.round(this.secsElapsed / 6, 10) / 10);
+                $('.fuzzyCost').text("... or " + this.fuzzifyAmount(costElapsed));
 
                 if(this.running) {
                     var _self = this;
@@ -178,11 +179,57 @@ debugger;
                         _self.update();
                     }, 1000);
                 }
+            },
+
+            fuzzifyAmount: function(amt) {
+
+                if(amt > 6200) {
+                    return "five Macbook Pros";
+                }
+
+                if(amt > 4000) {
+                    return "three Macbook Pros";
+                }
+
+                if(amt > 2000) {
+                    return "a new sofa";
+                }
+
+                if(amt > 1400) {
+                    return "a macbook pro";
+                }
+
+                if(amt > 800) {
+                    return "two iPads";
+                }
+
+                if(amt > 400) {
+                    return "an iPad 2";
+                }
+
+                if(amt > 120) {
+                    return "a large monitor";
+                }
+
+                if(amt > 40) {
+                    return "an Xbox game";
+                }
+
+                if(amt > 20) {
+                    return "a textbook from Amazon";
+                }
+
+                if(amt > 5) {
+                    return "Two magazines";
+                }
+
+                return "A pint of Peroni";
+
             }
         };
 
 
-        $('#btnGoTabSettings, #btnGoToTheApp').click(function() {
+        $('#btnGoTabSettings, #btnGoToTheApp, #btnApp').click(function() {
             $('#tabBtnSettings').click();
         });
         $('#btnGoTab4').click(function() {
@@ -201,6 +248,18 @@ debugger;
         $('#btnContact').click(function() {
             $('#tabBtnContact').click();
         });
+
+        $('#btnGoTab6').click(function() {
+
+            $('#tabBtnSubmitting').click();
+            setTimeout(function() {
+                $('#tabBtnDone').click();
+                setTimeout(function() {
+                    $('#tabBtnSettings').click();
+                }, 2400);
+            }, 1500);
+        });
+
 
     });
     </script>
